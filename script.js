@@ -1,4 +1,4 @@
-// ====== Free Fire IDs (2 IDs: 1st with 5 images, 2nd with 3 images) ======
+// Free Fire IDs Array
 const freeFireIDs = [
     {
         name: "FF_ProPlayer1",
@@ -29,15 +29,13 @@ freeFireIDs.forEach(id => {
     const div = document.createElement("div");
     div.className = "id-card";
 
-    let imagesHtml = `<div class="images-container">${id.images.map(img => `<img src="${img}" alt="${id.name}">`).join("")}</div>`;
+    const imagesHtml = `<div class="images-container">${id.images.map(img => `<img src="${img}" alt="${id.name}">`).join('')}</div>`;
 
     div.innerHTML = `
         <h3>${id.name}</h3>
         <p>Price: ${id.price}</p>
         ${imagesHtml}
-        <a href="https://wa.me/1234567890?text=Hi,%20I%20want%20to%20buy%20the%20Free%20Fire%20ID%20${id.name}" target="_blank">
-            <button>Buy Now</button>
-        </a>
+        <button onclick="window.open('https://www.instagram.com/free_fire_id_seller_indian__/','_blank')">Buy Now</button>
     `;
 
     container.appendChild(div);
