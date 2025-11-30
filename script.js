@@ -1,98 +1,44 @@
-// Generate 100 clothes + 100 shoes
-const clothingTypes = ["T-Shirt", "Jeans", "Hoodie", "Jacket", "Shirt", "Sweater", "Skirt", "Dress"];
-const shoeTypes = ["Sneakers", "Boots", "Sandals", "Running Shoes", "Loafers", "Flip-Flops"];
-
-let products = [];
-let cart = [];
-
-// Generate products
-for (let i = 1; i <= 100; i++) {
-    const type = clothingTypes[Math.floor(Math.random() * clothingTypes.length)];
-    const price = Math.floor(Math.random() * 50 + 10);
-    const img = `https://source.unsplash.com/200x200/?${type.replace(" ", "")},clothes&sig=${i}`;
-    products.push({id: `c${i}`, name: `${type} #${i}`, price, img, category: 'clothes'});
-}
-for (let i = 1; i <= 100; i++) {
-    const type = shoeTypes[Math.floor(Math.random() * shoeTypes.length)];
-    const price = Math.floor(Math.random() * 70 + 20);
-    const img = `https://source.unsplash.com/200x200/?${type.replace(" ", "")},shoes&sig=${i}`;
-    products.push({id: `s${i}`, name: `${type} #${i}`, price, img, category: 'shoes'});
-}
-
-// Display products
-function displayProducts(list) {
-    const container = document.getElementById("productsContainer");
-    container.innerHTML = "";
-    list.forEach(product => {
-        const div = document.createElement("div");
-        div.className = "product";
-        div.innerHTML = `
-            <img src="${product.img}" alt="${product.name}" loading="lazy">
-            <h3>${product.name}</h3>
-            <p>$${product.price}</p>
-            <button onclick="addToCart('${product.id}')">Add to Cart</button>
-        `;
-        container.appendChild(div);
-    });
-}
-
-displayProducts(products);
-
-// Filter
-function filterCategory(cat) {
-    if (cat === 'all') displayProducts(products);
-    else displayProducts(products.filter(p => p.category === cat));
-}
-
-// Search
-document.getElementById("searchBar").addEventListener("input", e => {
-    const query = e.target.value.toLowerCase();
-    const filtered = products.filter(p => p.name.toLowerCase().includes(query));
-    displayProducts(filtered);
-});
-
-// Cart
-function addToCart(id) {
-    const item = products.find(p => p.id === id);
-    cart.push(item);
-    updateCart();
-}
-
-// Update cart modal
-function updateCart() {
-    document.getElementById("cartCount").innerText = cart.length;
-    const container = document.getElementById("cartItems");
-    container.innerHTML = "";
-    let total = 0;
-    cart.forEach((item, index) => {
-        total += item.price;
-        const div = document.createElement("div");
-        div.innerHTML = `${item.name} - $${item.price} <button onclick="removeFromCart(${index})">Remove</button>`;
-        container.appendChild(div);
-    });
-    document.getElementById("cartTotal").innerText = total;
-}
-
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCart();
-}
-
-function checkout() {
-    if(cart.length === 0) alert("Cart is empty!");
-    else {
-        alert(`Thank you for your purchase! Total: $${cart.reduce((sum,i)=>sum+i.price,0)}`);
-        cart = [];
-        updateCart();
-        closeModal();
+// ====== Free Fire IDs (2 IDs: 1st with 5 images, 2nd with 3 images) ======
+const freeFireIDs = [
+    {
+        name: "FF_ProPlayer1",
+        price: "₹1000",
+        images: [
+            "https://i.ibb.co/7xXh68ym/image1.jpg",
+            "https://i.ibb.co/TxX31Lfp/image2.jpg",
+            "https://i.ibb.co/9ksKMfX0/image3.jpg",
+            "https://i.ibb.co/tjKQfrd/image4.jpg",
+            "https://i.ibb.co/ZRhgKj06/image5.jpg"
+        ]
+    },
+    {
+        name: "FF_SniperKing",
+        price: "₹500",
+        images: [
+            "https://i.ibb.co/67ppBBBq/image1.jpg",
+            "https://i.ibb.co/TM8NTsR0/image2.jpg",
+            "https://i.ibb.co/SDd2dcNQ/image3.jpg"
+        ]
     }
-}
+];
 
-// Modal logic
-const modal = document.getElementById("cartModal");
-const btn = document.getElementById("cartBtn");
-const span = document.querySelector(".close");
+// Display IDs
+const container = document.getElementById("idContainer");
 
-btn.onclick = () => modal.style.display = "block";
-span.onclick = () => modal.style.display = "none";
-window.onclick = e => { if(e.target === modal) modal.style.display = "none"; }
+freeFireIDs.forEach(id => {
+    const div = document.createElement("div");
+    div.className = "id-card";
+
+    let imagesHtml = `<div class="images-container">${id.images.map(img => `<img src="${img}" alt="${id.name}">`).join("")}</div>`;
+
+    div.innerHTML = `
+        <h3>${id.name}</h3>
+        <p>Price: ${id.price}</p>
+        ${imagesHtml}
+        <a href="https://wa.me/1234567890?text=Hi,%20I%20want%20to%20buy%20the%20Free%20Fire%20ID%20${id.name}" target="_blank">
+            <button>Buy Now</button>
+        </a>
+    `;
+
+    container.appendChild(div);
+});
