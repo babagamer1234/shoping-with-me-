@@ -1,4 +1,5 @@
-// Free Fire IDs Array
+const instagramLink = "https://www.instagram.com/free_fire_id_seller_indian__/";
+
 const freeFireIDs = [
     {
         name: "FF_ProPlayer1",
@@ -22,7 +23,6 @@ const freeFireIDs = [
     }
 ];
 
-// Display IDs
 const container = document.getElementById("idContainer");
 
 freeFireIDs.forEach(id => {
@@ -35,7 +35,7 @@ freeFireIDs.forEach(id => {
         <h3>${id.name}</h3>
         <p>Price: ${id.price}</p>
         ${imagesHtml}
-        <button onclick="window.open('https://www.instagram.com/free_fire_id_seller_indian__/','_blank')">Buy Now</button>
+        <button onclick="window.open('${instagramLink}', '_blank')">Buy Now</button>
     `;
 
     container.appendChild(div);
